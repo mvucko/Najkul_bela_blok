@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:layout/partija.dart';
+
+import 'Unos.dart';
 // Uncomment lines 7 and 10 to view the visual layout at runtime.
 // import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
@@ -23,14 +27,29 @@ class Entrypoint extends StatelessWidget{
 
 
 
-class Awidget extends StatelessWidget {
+class Awidget extends StatefulWidget {
+
+  @override
+  _AwidgetState createState() => _AwidgetState();
+}
+
+class _AwidgetState extends State<Awidget> {
+  Partija partija=new Partija();
 
   int _ukupnoMi=162;
+
   int _ukupnoVi=0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.settings), color: Colors.white,
+                onPressed: (){
+
+                }
+                )],),
         body: Column(
           children: [
             Column(
@@ -41,14 +60,42 @@ class Awidget extends StatelessWidget {
                 ]
               ), Row(
                   children: <Widget> [
-                    Expanded(child: Text(_ukupnoMi.toString(), textAlign: TextAlign.center, textScaleFactor: 2)),
-                    Expanded(child: Text(_ukupnoVi.toString(), textAlign: TextAlign.center, textScaleFactor: 2,))
+                    Expanded(child: Text(partija.ukupnoMi.toString(), textAlign: TextAlign.center, textScaleFactor: 2.5)),
+                    Expanded(child: Text(partija.ukupnoVi.toString(), textAlign: TextAlign.center, textScaleFactor: 2.5,))
                   ]
               )]
             ),
-              Flexible(child: ListView ( padding: const EdgeInsets.all(8), children: <Widget> [Container(color: Colors.blue, height: 60)],))
+              Flexible(child: ListView.separated (
+                padding: const EdgeInsets.all(8),
+                itemCount:partija.runde.length,
+                itemBuilder: (BuildContext context, int index){
+                  return Container(
+                    height: 50,
+                    color: Colors.cyan[200],
+                    child: Row(
+                      children: <Widget> [
+                        Expanded(child: Text(partija.runde[index].miUk.toString(), textScaleFactor: 1.5)),
+                        Expanded(child: Text(partija.runde[index].viUk.toString(), textScaleFactor: 1.5, textAlign: TextAlign.right,))
+                      ],
+                    )
+
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) => const Divider(),
+              )),
+
             ]
-        )
+        ),
+        floatingActionButton: FloatingActionButton(onPressed:(){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Unos(partija))).then((value) => setState(() {
+            // refresh state of Page1
+          }) );
+          (context as Element).reassemble();
+
+        } ,child: Icon(Icons.add))
     );
   }
 }
