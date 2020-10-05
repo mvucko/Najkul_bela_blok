@@ -1,19 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:layout/Postavke.dart';
 import 'package:layout/partija.dart';
-
+import 'dart:io';
+import 'Files.dart';
 import 'Unos.dart';
 // Uncomment lines 7 and 10 to view the visual layout at runtime.
 // import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() {
   // debugPaintSizeEnabled = true;
+
   runApp(Entrypoint());
 }
 
+
+
 class Entrypoint extends StatelessWidget{
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'TestApp',
       theme: ThemeData(
@@ -47,7 +57,9 @@ class _AwidgetState extends State<Awidget> {
           actions: <Widget>[
             IconButton(icon: Icon(Icons.settings), color: Colors.white,
                 onPressed: (){
-
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Postavke()));
                 }
                 )],),
         body: Column(
